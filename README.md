@@ -4,6 +4,8 @@ A reliable, asynchronous HTTP notification delivery gateway written in Go.
 
 Business systems submit fully-formed HTTP requests to this service. rc_keyork persists them, delivers them to external vendor APIs, retries on failure with exponential back-off, circuit-breaks per target domain, and optionally calls back the submitter with the final result — all without the caller needing to stay online.
 
+> **Design report** (problem understanding, architecture, engineering trade-offs, AI usage): [`docs/report.md`](docs/report.md)
+
 ---
 
 ## Table of Contents
