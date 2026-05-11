@@ -595,6 +595,10 @@ Exactly-once requires external systems to cooperate on idempotency, which is out
 
 Adding QPS limits per vendor increases configuration surface area and operational complexity. The circuit breaker already provides passive back-pressure when a vendor is struggling. Explicit rate limiting is planned for Phase 2 (see roadmap), triggered when 429 responses become frequent.
 
+### Standard library HTTP over Gin
+
+The HTTP layer uses Go's `net/http` + `ServeMux` directly — no third-party framework. With only 5 endpoints and simple routing, a framework adds no meaningful benefit and would introduce the project's only external dependency. When routing complexity grows (grouped middleware, many path parameters, versioned APIs), adopting Gin is a natural next step.
+
 ---
 
 ## Future Roadmap
@@ -605,3 +609,4 @@ Adding QPS limits per vendor increases configuration surface area and operationa
 | 2 — Per-vendor rate limiting | Frequent 429s or contractual QPS cap | Token-bucket per domain; optional Redis for global limit across instances |
 | 3 — Multi-region | Geographic expansion or latency SLA | Independent RabbitMQ clusters per region; single PG primary with async read replicas |
 | 4 — Notification priority | Differentiated delivery SLA | Split main queue into high/normal/low; weighted worker pool |
+| 5 — HTTP framework | Endpoint count grows, middleware needs unification | Migrate to Gin for route grouping, middleware chain, and request binding |
